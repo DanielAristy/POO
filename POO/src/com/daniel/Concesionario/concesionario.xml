@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<concesionario>
+    <Moto>
+        <cilindraje>150</cilindraje>
+        <esNueva>true</esNueva>
+        <marca>Honda</marca>
+        <precio>1500000</precio>
+        <serial>1234</serial>
+    </Moto>
+    <Moto>
+        <cilindraje>600</cilindraje>
+        <esNueva>true</esNueva>
+        <marca>H</marca>
+        <precio>15</precio>
+        <serial>12</serial>
+    </Moto>
+    <Moto>
+        <cilindraje>200</cilindraje>
+        <esNueva>true</esNueva>
+        <marca>chvorel</marca>
+        <precio>123333</precio>
+        <serial>5298</serial>
+    </Moto>
+</concesionario>

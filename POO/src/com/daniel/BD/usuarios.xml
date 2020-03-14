@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<empresa>
+    <usuario>
+        <apellido>Aristizabal Castaño</apellido>
+        <id>1234</id>
+        <nombre>Daniel</nombre>
+        <telefono>3122194947</telefono>
+    </usuario>
+    <usuario>
+        <apellido>mesa </apellido>
+        <id>34</id>
+        <nombre>jorge </nombre>
+        <telefono>3124567890</telefono>
+    </usuario>
+    <usuario>
+        <apellido>Martinez </apellido>
+        <id>1235</id>
+        <nombre>Juan Josse </nombre>
+        <telefono>5460236</telefono>
+    </usuario>
+</empresa>
