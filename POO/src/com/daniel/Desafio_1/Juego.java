@@ -40,7 +40,8 @@ public class Juego {
 	private  static final ImageIcon SEIS = new ImageIcon("D:\\Usuario\\Daniel Aristy\\Proyectos IntelliJ\\POO\\POO\\src\\com\\daniel\\Desafio_1\\seis.png");
 	
 	private static final String INICIO_JUEGO = "Bienvenido al juego de la Guayabita !\n\n ¿Que quieres hacer?";
-	private static  final String  TITULO = "Guayabita";	
+	private static  final String  TITULO = "Guayabita";
+	private static final int APUESTA_MINIMA_POR_JUGADOR = 100;
 	private ArrayList<Jugador> jugadores;
 	private ArrayList<ImageIcon> dados;
 	private int pote = 0;
@@ -71,6 +72,14 @@ public class Juego {
 		setPote(getPote()- apuesta);
 	}
 
+	public void apuestaJugadores(){
+		if (getPote() == 0) {
+			jugadores.forEach(jugador -> jugador.setSaldo(jugador.getSaldo() - APUESTA_MINIMA_POR_JUGADOR));
+			setPote(APUESTA_MINIMA_POR_JUGADOR * jugadores.size());
+		}
+	}
+
+
 	public void inicio() {
 		
 		Jugador j1  = new Jugador();
@@ -89,22 +98,22 @@ public class Juego {
 			
 			if (opcion == 0 && verificar == false ) {
 				
-				String nombre_jugador_1 , nombre_jugador_2;
-				int saldoJ1,saldoJ2;
+				String nombreJugador1 , nombreJugador2;
+				int saldoJugador1,saldoJugador2;
 				
 				//Control de la entrada de datos
 				do {
-					nombre_jugador_1 = (String) JOptionPane.showInputDialog(null,"Nombre del jugador 1"
+					nombreJugador1 = (String) JOptionPane.showInputDialog(null,"Nombre del jugador 1"
 							,TITULO,JOptionPane.DEFAULT_OPTION,ICONO,null, null);
 					
-				} while ((nombre_jugador_1.equals(null)) || (nombre_jugador_1.trim().isEmpty()));
+				} while ((nombreJugador1.equals(null)) || (nombreJugador1.trim().isEmpty()));
 				
 				do {
 					try {
-						saldoJ1 =  Integer.parseInt((String) JOptionPane.showInputDialog(null,"Saldo del jugador 1"
+						saldoJugador1 =  Integer.parseInt((String) JOptionPane.showInputDialog(null,"Saldo del jugador 1"
 								,TITULO,JOptionPane.DEFAULT_OPTION,ICONO,null, null));
 						entradaNro1 = true;
-						saldoJug1 = saldoJ1;
+						saldoJug1 = saldoJugador1;
 					} catch (NumberFormatException e) {
 						
 						mostrarMensaje("Error solo numeros, y mayores a 200");
@@ -113,17 +122,17 @@ public class Juego {
 				} while ( saldoJug1 < 200 || !entradaNro1);
 				
 				do {
-					nombre_jugador_2 = (String) JOptionPane.showInputDialog(null,"Nombre del jugador 2"
+					nombreJugador2 = (String) JOptionPane.showInputDialog(null,"Nombre del jugador 2"
 							,TITULO,JOptionPane.DEFAULT_OPTION,ICONO,null, null);
 					
-				} while ((nombre_jugador_2.equals(null)) || nombre_jugador_2.trim().isEmpty());
+				} while ((nombreJugador2.equals(null)) || nombreJugador2.trim().isEmpty());
 				
 				do {
 					try {
-						saldoJ2 =  Integer.parseInt((String) JOptionPane.showInputDialog(null,"Saldo del jugador 2 "
+						saldoJugador2 =  Integer.parseInt((String) JOptionPane.showInputDialog(null,"Saldo del jugador 2 "
 								,TITULO,JOptionPane.DEFAULT_OPTION,ICONO,null, null));
 						entradaNro2 = true;
-						saldoJug2 = saldoJ2;
+						saldoJug2 = saldoJugador2;
 					} catch (NumberFormatException e) {
 						
 						mostrarMensaje("Error solo numeros, y mayores a 200");
@@ -131,9 +140,9 @@ public class Juego {
 					
 				} while ( saldoJug2 < 200 || !entradaNro2);
 				
-				j1.setNombre(nombre_jugador_1);
+				j1.setNombre(nombreJugador1);
 				j1.setSaldo(saldoJug1);
-				j2.setNombre(nombre_jugador_2);
+				j2.setNombre(nombreJugador2);
 				j2.setSaldo(saldoJug2);
 				
 				//Ingresar jugadores a un array
@@ -145,11 +154,7 @@ public class Juego {
 				
 				while(verificar == true) {
 					
-					if (getPote() == 0) {//Primera apuesta
-						jugadores.get(0).setSaldo(jugadores.get(0).getSaldo()-100);
-						jugadores.get(1).setSaldo(jugadores.get(1).getSaldo()-100);
-						setPote(200);
-					}
+					apuestaJugadores();
 					
 					int apuesta = JOptionPane.showOptionDialog(null, jugadores.get(turno).getNombre()+","+" el pote actual es de "+ getPote()+
 											"\n\n  ¿Deseas lanzar el dado?", TITULO, JOptionPane.DEFAULT_OPTION,

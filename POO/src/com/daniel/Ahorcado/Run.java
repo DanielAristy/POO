@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.swing.JOptionPane;
+import javax.swing.text.DefaultEditorKit;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
@@ -15,11 +16,52 @@ public class Run {
 	private static JAXBContext jaxbContext = null;
 	private static File bdFile = new File("D:\\Usuario\\Daniel Aristy\\Proyectos IntelliJ\\POO\\POO\\src\\com\\daniel\\Ahorcado\\palabras.xml");
 	private static Juego juego = null;
+	public static boolean cerrar = true;
 	
 	public static void main(String[] args)  {
-		
+
+		inicializacion();
+		juego();
+	}
+
+	public static void juego(){
+
+		do {
+
+			int seleccione = JOptionPane.showOptionDialog(null, "Que deseas hacer?", "Bienvenido", JOptionPane.YES_NO_OPTION,
+					JOptionPane.INFORMATION_MESSAGE, null, new Object[]{"Ingresar palabra","Jugar","Eliminar palabra"}, "Ingresar palabra");
+
+			switch (seleccione) {
+				case 0:
+					juego.ingresarPalabra();
+					guardarCambios();
+
+					break;
+				case 1:
+					juego.jugar();
+					break;
+
+				case 2:
+					juego.listarPalabras();
+
+					String palabra= JOptionPane.showInputDialog("Ingresa la palabra la cual vas a eliminar");
+					juego.eliminarPalabra(palabra);
+
+					guardarCambios();
+
+					break;
+
+				case JOptionPane.CLOSED_OPTION:
+					cerrar = false;
+
+			}
+
+		}while(cerrar != false);
+	}
+
+	public static void inicializacion(){
 		try {
-			
+
 			jaxbContext = JAXBContext.newInstance(Juego.class);
 			bdFile.createNewFile();
 			Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
@@ -28,37 +70,6 @@ public class Run {
 			JOptionPane.showMessageDialog(null, "Imposible abrir el archivo de base de datos.");
 		}catch (IOException e1) {
 			JOptionPane.showMessageDialog(null, "Imposible crear el archivo.");
-		}
-		
-		boolean cerrar = true;
-		while (cerrar) {
-			
-			int seleccione = JOptionPane.showOptionDialog(null, "Que deseas hacer?", "Bienvenido", JOptionPane.YES_NO_OPTION,
-					JOptionPane.INFORMATION_MESSAGE, null, new Object[]{"Ingresar palabra","Jugar","Eliminar palabra"}, "Ingresar palabra");
-			
-			switch (seleccione) {
-			case 0:
-				juego.ingresarPalabra();
-				guardarCambios();
-				
-				break;
-			case 1:
-				juego.jugar();
-				break;
-			
-			case 2:
-				juego.listarPalabras();
-				
-				String palabra= JOptionPane.showInputDialog("Ingresa la palabra la cual vas a eliminar");
-				juego.eliminarPalabra(palabra);
-				
-				guardarCambios();
-				
-				break;
-			
-			case JOptionPane.CLOSED_OPTION:
-					cerrar = false;
-			}
 		}
 	}
 	
